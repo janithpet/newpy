@@ -1,0 +1,1 @@
+from newpy.loggers.colored_formatter import ColoredFormatter
