@@ -24,9 +24,9 @@ Note that the default author is set to my name. This can be changed by replacing
 
 ```
 {
-        "name": ["--author", "-a"],
-        "dest": "author",
-        "default": "<ADD NEW DEFAULT NAME HERE>",
-        "help": "The name of the author of the project"
-    }
+	"name": ["--author", "-a"],
+	"dest": "author",
+	"default": "<ADD NEW DEFAULT NAME HERE>",
+	"help": "The name of the author of the project"
+}
 ```
