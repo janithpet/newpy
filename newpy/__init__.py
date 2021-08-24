@@ -1,8 +1,9 @@
 import logging
 import logging.config
 import os
+import pathlib
 
 from newpy.loggers import ColoredFormatter
 
-logging.config.fileConfig(os.environ["LOGGING_CONFIG_PATH"])
+logging.config.fileConfig(str(pathlib.Path(__file__).parent.parent.resolve()) + "/logging_config.ini")
 logger = logging.getLogger()
