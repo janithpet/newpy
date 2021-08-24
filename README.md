@@ -22,9 +22,11 @@ The following options are available:
 
 Note that the default author is set to my name. This can be changed by replacing ADD NEW DEFAULT NAME HERE in the following bit of code in `newpy/newpy.py`:
 
-```{
+```
+{
         "name": ["--author", "-a"],
         "dest": "author",
         "default": "<ADD NEW DEFAULT NAME HERE>",
         "help": "The name of the author of the project"
-    }```
+    }
+```
