@@ -19,7 +19,7 @@ arguments = [
         "name": ["--author", "-a"],
         "dest": "author",
         "default": "Janith Petangoda",
-        "help": "Name of the author of the project"
+        "help": "The name of the author of the project"
     },
 	{
         "name": ["--git", "-g"],
@@ -27,7 +27,7 @@ arguments = [
 		"action": "store_const",
 		"const": True,
         "default": False,
-        "help": "Name of the author of the project"
+        "help": "Initialise git"
     },
 	{
         "name": ["--precommit", "-p"],
@@ -35,7 +35,7 @@ arguments = [
 		"action": "store_const",
 		"const": True,
         "default": False,
-        "help": "Name of the author of the project"
+        "help": "Install pre-commit hooks"
     },
 ]
 
