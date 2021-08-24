@@ -1,7 +1,7 @@
 import pathlib
 import pickle
 
-files = [
+templates = [
 	{
 		"name": ".env",
 		"location": ".",
@@ -353,5 +353,3 @@ class ColoredFormatter(logging.Formatter):
 		}
 
 ]
-# with open(str(pathlib.Path(__file__).parent.resolve()) + "/default.pickle", "wb") as f:
-# 	pickle.dump(files, f)
