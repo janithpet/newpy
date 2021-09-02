@@ -1,13 +1,13 @@
-import pathlib
-import pickle
 
 templates = [
 	{
+		"type": "normal",
 		"name": ".env",
 		"location": ".",
 		"content": ""
 	},
 	{
+		"type": "normal",
 		"name": ".gitignore",
 		"location": ".",
 		"content":
@@ -159,6 +159,7 @@ cython_debug/
 		"""
 	},
 	{
+		"type": "normal",
 		"name": ".pre-commit-config.yaml",
 		"location": ".",
 		"content":
@@ -186,6 +187,7 @@ repos:
 				"""
 		},
 		{
+			"type": "normal",
 			"name": "logging_config.ini",
 			"location": ".",
 			"content":
@@ -214,13 +216,30 @@ datefmt=%H:%M:%S
 class=PROJECT_NAME.ColoredFormatter
 			"""
 		},
-		{
-			"name": "Pipfile",
-			"location": ".",
-			"content":
-			""""""
+		{	"type": "conditional",
+			"condition": "venv",
+			"true": {
+				"type": "case",
+				"condition": "manager",
+				"pipenv": {
+					"type": "normal",
+					"name": "Pipfile",
+					"location": ".",
+					"content":
+					""""""
+					},
+				"pip": {
+					"type": "normal",
+					"name": "requirements.txt",
+					"location": ".",
+					"content":
+					""""""
+					}
+				},
+			"false": None,
 		},
 		{
+			"type": "normal",
 			"name": "pyproject.toml",
 			"location": ".",
 			"content": """[build-system]
@@ -233,11 +252,13 @@ src_paths = ["PROJECT_NAME"]
 """
 		},
 		{
+			"type": "normal",
 			"name": "README.md",
 			"location": ".",
 			"content": """"""
 		},
 		{
+			"type": "normal",
 			"name": "setup.cfg",
 			"location": ".",
 			"content":
@@ -297,6 +318,7 @@ exclude =
     .pytype"""
 		},
 		{
+			"type": "normal",
 			"name":"setup.py",
 			"location": ".",
 			"content": """import setuptools
@@ -306,6 +328,7 @@ if __name__ == "__main__":
 """
 		},
 		{
+			"type": "normal",
 			"name": "__init__.py",
 			"location": "./PROJECT_NAME/",
 			"content": """import logging
@@ -320,11 +343,13 @@ logger = logging.getLogger()
 """
 		},
 		{
+			"type": "normal",
 			"name": "__init__.py",
 			"location": "./PROJECT_NAME/loggers/",
 			"content": """from PROJECT_NAME.loggers.colored_formatter import ColoredFormatter"""
 		},
 		{
+			"type": "normal",
 			"name": "colored_formatter.py",
 			"location": "./PROJECT_NAME/loggers",
 			"content": """import logging
