@@ -3,7 +3,7 @@ Creates a new python package. It uses [pipenv](https://pipenv.pypa.io/en/latest/
 
 ## Installation
 
-Install by running `pipenv install .` in the root folder.
+Install by running `pip install .` in the root folder.
 
 ## Running, and options
 
