@@ -19,3 +19,5 @@ The following options are available:
 | -install, -i 	| [Flag] Install the new project. If --venv is set, this will be installed in the virtual environment that is created. 	|
 | --git, -g 	| [Flag] Initialises git if this flag is set 	|
 | --precommit, -p 	| [Flag] Install [pre-commit](https://pre-commit.com/) hooks if this flag is set. This requires the --git flag. 	|
+
+The first time `newpy` is run, it will ask for a default name and package manager; these will be stored for future use.
