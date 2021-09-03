@@ -131,13 +131,13 @@ def operate_on_file(file: Dict, project_name, author, project_path, locals):
 def main():
 	storage: Storage = Storage.from_json(str(pathlib.Path(__file__).parent.resolve()) + "/storage/storage.json")
 	author = retrieve_author(arguments, storage)
-	logger.debug(f"Author is set to {author}")
+	logger.info(f"Author is set to {author}")
 
 	manager = retrieve_manager(arguments, storage)
-	logger.debug(f"Manager is set to {manager}")
+	logger.info(f"Manager is set to {manager}")
 
 	license = retrieve_license(arguments, storage)
-	logger.debug(f"License is set to {license}")
+	logger.info(f"License is set to {license}")
 	venv = arguments.venv
 
 

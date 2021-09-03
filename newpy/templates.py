@@ -190,7 +190,7 @@ repos:
 		{
 			"type": "normal",
 			"name": "logging_config.ini",
-			"location": ".",
+			"location": "./PROJECT_NAME/",
 			"content":
 			"""[loggers]
 keys=root
@@ -432,7 +432,7 @@ import pathlib
 
 from PROJECT_NAME.loggers import ColoredFormatter
 
-logging.config.fileConfig(str(pathlib.Path(__file__).parent.parent.resolve()) + "/logging_config.ini")
+logging.config.fileConfig(str(pathlib.Path(__file__).parent.resolve()) + "/logging_config.ini")
 logger = logging.getLogger()
 """
 		},

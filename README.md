@@ -1,6 +1,5 @@
 # newpy
-Creates a new python package. It uses [pipenv](https://pipenv.pypa.io/en/latest/) to manage the virtual environment.
-
+Creates a new python package.
 ## Installation
 
 Install by running `pip install .` in the root folder.
