@@ -159,15 +159,15 @@ def main():
 		else:
 			subprocess.run([f"{manager} install -e ."], shell=True)
 
-	if arguments.precommit:
-		logger.info("Installing pre-commit hooks")
-		if manager == "pipenv":
-			subprocess.run(["bash", "-c", "source $(pipenv --venv)/bin/activate && pre-commit install && exit"])
-		elif manager == "pip":
-			subprocess.run(["bash", "-c", "source .venv/bin/activate && pre-commit install && exit"])
-
 	if arguments.git:
 		logger.info("Initialising git")
 		subprocess.run(["git init"], shell=True)
 		subprocess.run(["git add ."], shell=True)
 		subprocess.run(["git commit -am 'first commit'"], shell=True)
+
+		if arguments.precommit:
+			logger.info("Installing pre-commit hooks")
+			if manager == "pipenv":
+				subprocess.run(["bash", "-c", "source $(pipenv --venv)/bin/activate && pre-commit install && exit"])
+			elif manager == "pip":
+				subprocess.run(["bash", "-c", "source .venv/bin/activate && pre-commit install && exit"])
