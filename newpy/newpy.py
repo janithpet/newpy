@@ -32,6 +32,18 @@ arguments = [
 		"help": "Set name of the author of the project temporarily"
 	},
 	{
+		"name": ["--license", "-l"],
+		"dest": "license",
+		"default": None,
+        "help": "Set LICENSE of the project; currently supports the MIT License"
+	},
+	{
+		"name": ["--license-tmp", "-k"],
+		"dest": "license_tmp",
+		"action": "store_true",
+		"help": "Set LICENSE of the project temporarily"
+	},
+	{
         "name": ["--create-venv", "-v"],
         "dest": "venv",
 		"action": "store_const",
@@ -77,6 +89,7 @@ arguments = parser.parse_args()
 
 retrieve_author = partial(retrieve, arg="author", tmp=True)
 retrieve_manager = partial(retrieve, arg="manager", tmp=False)
+retrieve_license = partial(retrieve, arg="license", tmp=True)
 
 def update_template(d: Dict, project_name, author, project_path):
 	for key in d.keys():
@@ -121,9 +134,13 @@ def main():
 	logger.debug(f"Author is set to {author}")
 
 	manager = retrieve_manager(arguments, storage)
+	logger.debug(f"Manager is set to {manager}")
+
+	license = retrieve_license(arguments, storage)
+	logger.debug(f"License is set to {license}")
 	venv = arguments.venv
 
-	logger.debug(f"Manager is set to {manager}")
+
 
 
 	project_path = f"{os.getcwd()}/{arguments.project_name}"
