@@ -35,7 +35,7 @@ arguments = [
 		"name": ["--license", "-l"],
 		"dest": "license",
 		"default": None,
-        "help": "Set LICENSE of the project; currently supports the MIT License"
+        "help": "Set LICENSE of the project; currently supports the MIT License, Unlicensed and the Boost Software License 1.0"
 	},
 	{
 		"name": ["--license-tmp", "-k"],
