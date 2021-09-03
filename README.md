@@ -10,9 +10,8 @@ Install by running `pip install .` in the root folder.
 Run using `newpy <project name>`.
 
 The following options are available:
-
 | Option 	| Description 	|
-|:---:	|:---:	|
+|:---:	|---	|
 | --author, -a 	| Specify the name of the author, and save as the default author 	|
 | --author-tmp, -t 	| [Flag] Specify that the author name will not save as the default author 	|
 | --manager, -m 	| Specify the python package manager (and virtual environment). Currently supports `pip` or `pipenv`. If `pip` is chosen, the virtual environment will be created using `virtualenv`. 	|
