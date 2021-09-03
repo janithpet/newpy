@@ -17,6 +17,8 @@ arguments = [
 	{
         "name": ["project_name"],
         "type": str,
+		"nargs": "?",
+		"default": None,
         "help": "The name of the new python project"
     },
     {
@@ -91,6 +93,7 @@ retrieve_author = partial(retrieve, arg="author", tmp=True)
 retrieve_manager = partial(retrieve, arg="manager", tmp=False)
 retrieve_license = partial(retrieve, arg="license", tmp=True)
 
+
 def update_template(d: Dict, project_name, author, project_path):
 	for key in d.keys():
 		d[key] = d[key].replace("PROJECT_NAME", project_name)
@@ -138,53 +141,53 @@ def main():
 
 	license = retrieve_license(arguments, storage)
 	logger.info(f"License is set to {license}")
+
 	venv = arguments.venv
+	precommit = arguments.precommit
 
+	if arguments.project_name is not None:
+		project_path = f"{os.getcwd()}/{arguments.project_name}"
 
+		logger.info(f"Creating project {project_path}")
+		try:
+			os.mkdir(f"./{arguments.project_name}")
+		except FileExistsError:
+			pass
+		os.chdir(project_path)
 
+		for file in templates:
+			operate_on_file(file, project_name=arguments.project_name, author=author, project_path=project_path, locals=locals())
 
-	project_path = f"{os.getcwd()}/{arguments.project_name}"
+		assert os.getcwd() == project_path
 
-	logger.info(f"Creating project {project_path}")
-	try:
-		os.mkdir(f"./{arguments.project_name}")
-	except FileExistsError:
-		pass
-	os.chdir(project_path)
-
-	for file in templates:
-		operate_on_file(file, project_name=arguments.project_name, author=author, project_path=project_path, locals=locals())
-
-	assert os.getcwd() == project_path
-
-
-	if arguments.venv:
-		logger.info(f"Installing virtual environment")
-		if manager == "pipenv":
-			subprocess.run(["pipenv install"], shell=True)
-		elif manager == "pip":
-			subprocess.run(["virtualenv .venv"], shell=True)
-
-	if arguments.install:
-		logger.info(f"Installing {manager} current project")
 
 		if arguments.venv:
+			logger.info(f"Installing virtual environment")
 			if manager == "pipenv":
-				subprocess.run(["bash", "-c", "source $(pipenv --venv)/bin/activate && pipenv install -e . && exit"])
+				subprocess.run(["pipenv install"], shell=True)
 			elif manager == "pip":
-				subprocess.run(["bash", "-c", "source .venv/bin/activate && pip install -e . && exit"])
-		else:
-			subprocess.run([f"{manager} install -e ."], shell=True)
+				subprocess.run(["virtualenv .venv"], shell=True)
 
-	if arguments.git:
-		logger.info("Initialising git")
-		subprocess.run(["git init"], shell=True)
-		subprocess.run(["git add ."], shell=True)
-		subprocess.run(["git commit -am 'first commit'"], shell=True)
+		if arguments.install:
+			logger.info(f"Installing {manager} current project")
 
-		if arguments.precommit:
-			logger.info("Installing pre-commit hooks")
-			if manager == "pipenv":
-				subprocess.run(["bash", "-c", "source $(pipenv --venv)/bin/activate && pre-commit install && exit"])
-			elif manager == "pip":
-				subprocess.run(["bash", "-c", "source .venv/bin/activate && pre-commit install && exit"])
+			if arguments.venv:
+				if manager == "pipenv":
+					subprocess.run(["bash", "-c", "source $(pipenv --venv)/bin/activate && pipenv install -e . && exit"])
+				elif manager == "pip":
+					subprocess.run(["bash", "-c", "source .venv/bin/activate && pip install -e . && exit"])
+			else:
+				subprocess.run([f"{manager} install -e ."], shell=True)
+
+		if arguments.git:
+			logger.info("Initialising git")
+			subprocess.run(["git init"], shell=True)
+			subprocess.run(["git add ."], shell=True)
+			subprocess.run(["git commit -am 'first commit'"], shell=True)
+
+			if arguments.precommit:
+				logger.info("Installing pre-commit hooks")
+				if manager == "pipenv":
+					subprocess.run(["bash", "-c", "source $(pipenv --venv)/bin/activate && pre-commit install && exit"])
+				elif manager == "pip":
+					subprocess.run(["bash", "-c", "source .venv/bin/activate && pre-commit install && exit"])
