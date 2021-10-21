@@ -383,7 +383,7 @@ install_requires =
     humanfriendly==9.2
 
 # Require a specific Python version, e.g. Python 2.7 or >= 3.4
-python_requires = ~=3.8
+python_requires = >=3.6
 
 [options.extras_require]
 # Add here additional requirements for extra features, to install with:
