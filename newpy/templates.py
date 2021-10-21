@@ -234,7 +234,7 @@ class=PROJECT_NAME.ColoredFormatter
 					"content":
 					""""""
 					},
-				"pp": {
+				"pip": {
 					"type": "normal",
 					"name": "requirements.txt",
 					"location": ".",
