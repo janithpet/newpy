@@ -1,5 +1,7 @@
 from functools import partial
 import json
+import os
+from pathlib import Path
 from typing import Any, Dict, List
 
 
@@ -25,10 +27,13 @@ class Storage:
 		if store: self.store()
 
 	@classmethod
-	def from_json(cls, file_name: str) -> Any:
-		with open(file_name, "r+") as f:
-			storage = json.load(f)
-			assert type(storage) is dict, f"{file_name} should resolve to a dictionary"
+	def from_json(cls, file_name: str, default={"author": None, "manager": None, "license": None}) -> Any:
+		if not os.path.exists(file_name):
+			storage = default
+		else:
+			with open(file_name, "r+") as f:
+				storage = json.load(f)
+				assert type(storage) is dict, f"{file_name} should resolve to a dictionary"
 
 		details = {
 			"type": "json",

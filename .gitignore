@@ -1,4 +1,5 @@
 #Custom
+**/storage.json
 .vscode/**
 .env
 Pipfile.lock
