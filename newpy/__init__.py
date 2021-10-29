@@ -1,6 +1,6 @@
+import numpy as np
 import logging
 import logging.config
-import os
 import pathlib
 
 from newpy.loggers import ColoredFormatter
