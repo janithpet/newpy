@@ -5,4 +5,3 @@ build-backend = "setuptools.build_meta"
 [tool.isort]
 profile = "google"
 src_paths = ["newpy"]
-skip = ["__init__.py"]
