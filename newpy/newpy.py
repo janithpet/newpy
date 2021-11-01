@@ -5,7 +5,7 @@ import os
 import pathlib
 import subprocess
 from typing import Dict
-h
+
 from newpy import logger
 from newpy.storage import Storage
 from newpy.templates import templates
