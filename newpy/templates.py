@@ -170,6 +170,10 @@ cython_debug/
 			"""
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
+
+#Added because of https://github.com/pre-commit/pre-commit/issues/1375#issuecomment-804399839
+default_language_version:
+    python: python3
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.2.0
