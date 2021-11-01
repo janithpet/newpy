@@ -233,8 +233,9 @@ class=PROJECT_NAME.ColoredFormatter
 					"location": ".",
 					"content":
 					"""[packages]
-pre-commit==2.12.1
-isort==5.8.0"""
+pre-commit = "2.12.1"
+isort = "5.8.0"
+"""
 					},
 				"pip": {
 					"type": "normal",

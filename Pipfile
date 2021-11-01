@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 humanfriendly = "*"
 pre-commit = "*"
+isort = "5.8.0"
 newpy = {editable = true, path = "."}
 
 [dev-packages]
