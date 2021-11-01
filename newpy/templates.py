@@ -232,7 +232,9 @@ class=PROJECT_NAME.ColoredFormatter
 					"name": "Pipfile",
 					"location": ".",
 					"content":
-					""""""
+					"""[packages]
+pre-commit==2.12.1
+isort==5.8.0"""
 					},
 				"pip": {
 					"type": "normal",
@@ -348,6 +350,7 @@ build-backend = "setuptools.build_meta"
 [tool.isort]
 profile = "google"
 src_paths = ["PROJECT_NAME"]
+skip = ["__init__.py"]
 """
 		},
 		{
@@ -378,8 +381,6 @@ packages = find:
 
 # Add here dependencies of your project (semicolon/line-separated), e.g.
 install_requires =
-    pre-commit==2.12.1
-    isort==5.8.0
     humanfriendly==9.2
 
 # Require a specific Python version, e.g. Python 2.7 or >= 3.4
