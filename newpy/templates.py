@@ -1,18 +1,24 @@
 import datetime
 
 templates = [
-	{
-		"type": "normal",
-		"name": ".env",
-		"location": ".",
-		"content": ""
-	},
-	{
-		"type": "normal",
-		"name": ".gitignore",
-		"location": ".",
-		"content":
-		"""#Custom
+    {
+        "type": "normal",
+        "name": "main.py",
+                "location": "./PROJECT_NAME",
+                "content": ""
+    },
+    {
+        "type": "normal",
+        "name": ".env",
+                "location": ".",
+                "content": ""
+    },
+    {
+        "type": "normal",
+        "name": ".gitignore",
+                "location": ".",
+                "content":
+                """#Custom
 .vscode/**
 .env
 Pipfile.lock
@@ -158,16 +164,16 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 		"""
-	},
-	{
-		"type": "conditional",
-		"condition": "precommit",
-		"true": {
-			"type": "normal",
-			"name": ".pre-commit-config.yaml",
-			"location": ".",
-			"content":
-			"""
+    },
+    {
+        "type": "conditional",
+        "condition": "precommit",
+                "true": {
+                    "type": "normal",
+                    "name": ".pre-commit-config.yaml",
+                    "location": ".",
+                    "content":
+                        """
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 
@@ -193,15 +199,15 @@ repos:
       - id: isort
         name: isort (pyi)
         types: [pyi]"""
-			},
-		"false": None,
-		},
-		{
-			"type": "normal",
-			"name": "logging_config.ini",
-			"location": "./PROJECT_NAME/",
-			"content":
-			"""[loggers]
+                },
+        "false": None,
+    },
+    {
+        "type": "normal",
+        "name": "logging_config.ini",
+        "location": "./PROJECT_NAME/",
+        "content":
+        """[loggers]
 keys=root
 
 [handlers]
@@ -225,41 +231,48 @@ format=%(levelname) -20s %(module)-20s %(process) -6d %(lineno)-5d %(asctime)-10
 datefmt=%H:%M:%S
 class=PROJECT_NAME.ColoredFormatter
 			"""
-		},
-		{	"type": "conditional",
-			"condition": "venv",
-			"true": {
-				"type": "case",
-				"condition": "manager",
-				"pipenv": {
-					"type": "normal",
-					"name": "Pipfile",
-					"location": ".",
-					"content":
-					"""[packages]
+    },
+    {"type": "conditional",
+     "condition": "venv",
+     "true": {
+         "type": "case",
+         "condition": "manager",
+         "pipenv": {
+             "type": "normal",
+             "name": "Pipfile",
+             "location": ".",
+                         "content":
+                         """[packages]
 pre-commit = "*"
 isort = "*"
 """
-					},
-				"pip": {
-					"type": "normal",
-					"name": "requirements.txt",
-					"location": ".",
-					"content":
-					""""""
-					}
-				},
-			"false": None,
-		},
-		{
-			"type": "case",
-			"condition": "license",
-			"mit": {
-				"type": "normal",
-				"name": "LICENSE",
-				"location": ".",
-				"content":
-				f"""MIT License
+         },
+         "pip": {
+             "type": "normal",
+             "name": "requirements.txt",
+             "location": ".",
+                         "content":
+                         """"""
+         },
+         "pyenv": {
+             "type": "normal",
+             "name": "requirements.txt",
+             "location": ".",
+                         "content":
+                         """"""
+         }
+     },
+     "false": None,
+     },
+    {
+        "type": "case",
+        "condition": "license",
+        "mit": {
+            "type": "normal",
+            "name": "LICENSE",
+            "location": ".",
+            "content":
+            f"""MIT License
 
 Copyright (c) {datetime.datetime.now().year} AUTHOR
 
@@ -281,13 +294,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 				"""
-				},
-				"unlicense": {
-					"type": "normal",
-					"name": "LICENSE",
-					"location": ".",
-					"content":
-					f"""This is free and unencumbered software released into the public domain.
+        },
+        "unlicense": {
+            "type": "normal",
+            "name": "LICENSE",
+            "location": ".",
+            "content":
+            f"""This is free and unencumbered software released into the public domain.
 
 Anyone is free to copy, modify, publish, use, compile, sell, or
 distribute this software, either in source code form or as a compiled
@@ -312,13 +325,13 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <https://unlicense.org>
 					"""
-					},
-				"boost": {
-					"type": "normal",
-					"name": "LICENSE",
-					"location": ".",
-					"content":
-					f"""Boost Software License - Version 1.0 - August 17th, 2003
+        },
+        "boost": {
+            "type": "normal",
+            "name": "LICENSE",
+            "location": ".",
+            "content":
+            f"""Boost Software License - Version 1.0 - August 17th, 2003
 
 Permission is hereby granted, free of charge, to any person or organization
 obtaining a copy of the software and accompanying documentation covered by
@@ -342,13 +355,13 @@ FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 					"""
-					},
-		},
-		{
-			"type": "normal",
-			"name": "pyproject.toml",
-			"location": ".",
-			"content": """[build-system]
+        },
+    },
+    {
+        "type": "normal",
+        "name": "pyproject.toml",
+        "location": ".",
+        "content": """[build-system]
 requires = ["setuptools >= 40.6.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
@@ -357,19 +370,19 @@ profile = "google"
 src_paths = ["PROJECT_NAME"]
 skip = ["__init__.py"]
 """
-		},
-		{
-			"type": "normal",
-			"name": "README.md",
-			"location": ".",
-			"content": """"""
-		},
-		{
-			"type": "normal",
-			"name": "setup.cfg",
-			"location": ".",
-			"content":
-			"""# This file is used to configure your project.
+    },
+    {
+        "type": "normal",
+        "name": "README.md",
+        "location": ".",
+        "content": """"""
+    },
+    {
+        "type": "normal",
+        "name": "setup.cfg",
+        "location": ".",
+        "content":
+        """# This file is used to configure your project.
 # Read more about the various options under:
 # http://setuptools.readthedocs.io/en/latest/setuptools.html#configuring-setup-using-setup-cfg-files
 
@@ -421,22 +434,22 @@ exclude =
     # This contains builds of flake8 that we don't want to check
     dist,
     .pytype"""
-		},
-		{
-			"type": "normal",
-			"name":"setup.py",
-			"location": ".",
-			"content": """import setuptools
+    },
+    {
+        "type": "normal",
+        "name": "setup.py",
+        "location": ".",
+        "content": """import setuptools
 
 if __name__ == "__main__":
   setuptools.setup()
 """
-		},
-		{
-			"type": "normal",
-			"name": "__init__.py",
-			"location": "./PROJECT_NAME/",
-			"content": """import logging
+    },
+    {
+        "type": "normal",
+        "name": "__init__.py",
+        "location": "./PROJECT_NAME/",
+        "content": """import logging
 import logging.config
 import os
 import pathlib
@@ -446,18 +459,18 @@ from PROJECT_NAME.loggers import ColoredFormatter
 logging.config.fileConfig(str(pathlib.Path(__file__).parent.resolve()) + "/logging_config.ini")
 logger = logging.getLogger()
 """
-		},
-		{
-			"type": "normal",
-			"name": "__init__.py",
-			"location": "./PROJECT_NAME/loggers/",
-			"content": """from PROJECT_NAME.loggers.colored_formatter import ColoredFormatter"""
-		},
-		{
-			"type": "normal",
-			"name": "colored_formatter.py",
-			"location": "./PROJECT_NAME/loggers",
-			"content": """import logging
+    },
+    {
+        "type": "normal",
+        "name": "__init__.py",
+        "location": "./PROJECT_NAME/loggers/",
+        "content": """from PROJECT_NAME.loggers.colored_formatter import ColoredFormatter"""
+    },
+    {
+        "type": "normal",
+        "name": "colored_formatter.py",
+        "location": "./PROJECT_NAME/loggers",
+        "content": """import logging
 
 from humanfriendly.terminal import ansi_wrap
 
@@ -480,6 +493,6 @@ class ColoredFormatter(logging.Formatter):
 		record.msg = ansi_wrap(str(record.msg), **self.FORMATS[record.levelno])
 		return super().format(record)
 """
-		}
+    }
 
 ]
