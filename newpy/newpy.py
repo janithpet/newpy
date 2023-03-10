@@ -150,6 +150,8 @@ def main():
     venv = arguments.venv
     precommit = arguments.precommit
 
+    current_dir_name = os.getcwd().split(os.path.sep)[-1]
+
     if arguments.project_name is not None:
         project_path = f"{os.getcwd()}/{arguments.project_name}"
         project_name = os.path.basename(project_path)
@@ -179,11 +181,13 @@ def main():
                 _venv_name = arguments.venv_name if arguments.venv_name else ".venv"
                 subprocess.run([f"virtualenv {_venv_name}"], shell=True)
             elif manager == "pyenv":
-                _venv_name = arguments.venv_name if arguments.venv_name else project_name
-                subprocess.run([f"pyenv virtualenv {_venv_name}"], shell=True)
+                _venv_name = current_dir_name + "." + (arguments.venv_name if arguments.venv_name else project_name)
+                print(_venv_name)
+                subprocess.run([f"pyenv virtualenv {_venv_name};echo {_venv_name} > .python-version"], shell=True)
+
 
         if arguments.install:
-            logger.info(f"Installing {manager} current project")
+            logger.info(f"Installing current project using {manager}")
             if arguments.venv:
                 if manager == "pipenv":
                     subprocess.run(["bash", "-c", "source $(pipenv --venv)/bin/activate && pipenv install -e . && exit"])
@@ -191,8 +195,7 @@ def main():
                     _venv_name = arguments.venv_name if arguments.venv_name else ".venv"
                     subprocess.run(["bash", "-c", f"source {_venv_name}/bin/activate && pip install -e . && exit"])
                 elif manager == "pyenv":
-                    _venv_name = arguments.venv_name if arguments.venv_name else project_name
-                    subprocess.run(["bash", "-c", f"pyenv activate {_venv_name}  && pip install -e . && exit"])
+                    print(f"Cannot install project with pyenv. Please run\n\tcd {project_name}; pip install -e .")
             else:
                 subprocess.run([f"{manager} install -e ."], shell=True)
 
