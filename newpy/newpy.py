@@ -190,7 +190,7 @@ def main():
 
         if arguments.venv:
             result = None
-            _venv_name = current_dir_name + "." + (arguments.venv_name if arguments.venv_name else project_name)
+            _venv_name = arguments.venv_name if arguments.venv_name else current_dir_name + "." + project_name
 
             logger.info(f"Installing virtual environment")
             if manager == "pipenv":
@@ -199,7 +199,7 @@ def main():
                 # _venv_name = arguments.venv_name if arguments.venv_name else ".venv"
                 result = subprocess.run([f"virtualenv {_venv_name}"], shell=True, capture_output=True, text=True)
             elif manager == "pyenv":
-                # _venv_name = current_dir_name + "." + (arguments.venv_name if arguments.venv_name else project_name)
+            # _venv_name = current_dir_name + "." + (arguments.venv_name if arguments.venv_name else project_name)
                 result = subprocess.run([f"pyenv virtualenv {_venv_name};echo {_venv_name} > .python-version"], shell=True, capture_output=True, text=True)
 
             handle_subprocess_result(result, "create virtual environment")
@@ -237,10 +237,10 @@ def main():
                 elif manager == "pyenv":
                     _venv_name = current_dir_name + "." + (arguments.venv_name if arguments.venv_name else project_name)
                     result = subprocess.run([f"pre-commit install"], shell=True, capture_output=True, text=True)
-            
+
                 handle_subprocess_result(result, "setup pre-commit")
-        
-                    
+
+
 
     else:
         logger.error("Please enter a project_name")
