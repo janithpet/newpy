@@ -1,5 +1,6 @@
 # newpy
 Creates a new python package.
+
 ## Installation
 
 Install by running `pip install .` in the root folder.
