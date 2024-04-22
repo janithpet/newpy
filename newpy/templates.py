@@ -4,7 +4,7 @@ templates = [
     {
         "type": "normal",
         "name": "main.py",
-                "location": "./PROJECT_NAME",
+                "location": "./",
                 "content": ""
     },
     {
