@@ -9,7 +9,7 @@ Install by running `pip install .` in the root folder.
 
 Run using `newpy <project name>`.
 
-When run for the first time, you will be asked to set the default author, python manager (`pip` or `pipenv`), and license (`mit`, `unlicense` and `boost`). 
+When run for the first time, you will be asked to set the default author, python manager (`pip`, `pipenv` or `pyenv`), and license (`mit`, `unlicense` and `boost`). 
 
 The default values can be changed to using the options below. 
 
