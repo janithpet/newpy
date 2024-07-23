@@ -3,7 +3,7 @@ from functools import partial
 import os
 import pathlib
 import subprocess
-from typing import Any, Dict, Mapping, Sequence
+from typing import Any, Dict
 
 from newpy import logger
 from newpy.storage import Storage
