@@ -1,27 +1,11 @@
 import datetime
 from typing import Collection, Mapping
 
-<<<<<<< HEAD
 TemplateType = Mapping[str, "TemplateType"] | None | Collection[str] | str
 
 TEMPLATES: list[TemplateType] = [
     {"type": "normal", "name": "main.py", "location": "./", "content": ""},
     {"type": "normal", "name": ".env", "location": ".", "content": ""},
-=======
-templates = [
-    {
-        "type": "normal",
-        "name": "main.py",
-                "location": "./",
-                "content": ""
-    },
-    {
-        "type": "normal",
-        "name": ".env",
-                "location": ".",
-                "content": ""
-    },
->>>>>>> f18205909a7655bbfe624c9dabedf006615ba0f7
     {
         "type": "normal",
         "name": ".gitignore",
