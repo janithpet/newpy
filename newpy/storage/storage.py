@@ -2,49 +2,61 @@ from functools import partial
 import json
 import os
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Callable
+
+from newpy import logger
 
 
 class Storage:
-	def __init__(self, arguments: Dict, details: Dict) -> None:
-		self._arguments: List = list(arguments.keys())
-		self.update(arguments)
+    def __init__(
+        self,
+        arguments: dict[str, str | None],
+        store_f: Callable[[Any], None],
+    ) -> None:
+        self._arguments: list[str] = list(arguments.keys())
+        self.update(arguments)
 
-		self.details = details
+        self.store_f = store_f
 
-	def store(self):
-		data = {argument: getattr(self, argument) for argument in self._arguments}
+    def store(self) -> None:
+        data = {argument: getattr(self, argument) for argument in self._arguments}
 
-		self.details["store"](data)
+        self.store_f(data)
 
+    def update(self, arguments: dict[str, str | None], store: bool = False) -> None:
+        assert all(
+            [argument in self._arguments for argument in arguments]
+        )  # TODO: Better error message here
 
-	def update(self, arguments: Dict, store: bool = False) -> None:
-		assert all([argument in self._arguments for argument in arguments]) #TODO: Better error message here
+        for key, value in arguments.items():
+            setattr(self, key, value)
 
-		for key, value in arguments.items():
-			setattr(self, key, value)
+        if store:
+            self.store()
 
-		if store: self.store()
+    @classmethod
+    def from_json(
+        cls,
+        file_name: str,
+        default: dict[str, str | None] = {
+            "author": None,
+            "manager": None,
+            "license": None,
+        },
+    ) -> "Storage":
+        if not os.path.exists(file_name):
+            storage = default
+        else:
+            with open(file_name, "r+") as f:
+                storage = json.load(f)
+                assert (
+                    type(storage) is dict
+                ), f"{file_name} should resolve to a dictionary"
 
-	@classmethod
-	def from_json(cls, file_name: str, default={"author": None, "manager": None, "license": None}) -> Any:
-		if not os.path.exists(file_name):
-			storage = default
-		else:
-			with open(file_name, "r+") as f:
-				storage = json.load(f)
-				assert type(storage) is dict, f"{file_name} should resolve to a dictionary"
+        store_f = partial(Storage._json_store, file_name=file_name)
+        return cls(storage, store_f)
 
-		details = {
-			"type": "json",
-			"store": partial(Storage._json_store, file_name=file_name)
-		}
-		obj = object.__new__(cls)
-		obj.__init__(storage, details)
-
-		return obj
-
-	@staticmethod
-	def _json_store(data, file_name):
-		with open(file_name, "w+") as f:
-			json.dump(data, f)
+    @staticmethod
+    def _json_store(data: Any, file_name: Path) -> None:
+        with open(file_name, "w+") as f:
+            json.dump(data, f)

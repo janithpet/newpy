@@ -1,4 +1,5 @@
 #Custom
+.python-version
 **.DS_Store**
 **/storage.json
 .vscode/**

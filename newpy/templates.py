@@ -1,24 +1,16 @@
 import datetime
+from typing import Collection, Mapping
 
-templates = [
-    {
-        "type": "normal",
-        "name": "main.py",
-                "location": "./PROJECT_NAME",
-                "content": ""
-    },
-    {
-        "type": "normal",
-        "name": ".env",
-                "location": ".",
-                "content": ""
-    },
+TemplateType = Mapping[str, "TemplateType"] | None | Collection[str] | str
+
+TEMPLATES: list[TemplateType] = [
+    {"type": "normal", "name": "main.py", "location": "./", "content": ""},
+    {"type": "normal", "name": ".env", "location": ".", "content": ""},
     {
         "type": "normal",
         "name": ".gitignore",
-                "location": ".",
-                "content":
-                """#Custom
+        "location": ".",
+        "content": """#Custom
 .vscode/**
 .env
 Pipfile.lock
@@ -163,17 +155,16 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
-		"""
+		""",
     },
     {
         "type": "conditional",
         "condition": "precommit",
-                "true": {
-                    "type": "normal",
-                    "name": ".pre-commit-config.yaml",
-                    "location": ".",
-                    "content":
-                        """
+        "true": {
+            "type": "normal",
+            "name": ".pre-commit-config.yaml",
+            "location": ".",
+            "content": """
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 
@@ -198,16 +189,15 @@ repos:
         types: [cython]
       - id: isort
         name: isort (pyi)
-        types: [pyi]"""
-                },
+        types: [pyi]""",
+        },
         "false": None,
     },
     {
         "type": "normal",
         "name": "logging_config.ini",
         "location": "./PROJECT_NAME/",
-        "content":
-        """[loggers]
+        "content": """[loggers]
 keys=root
 
 [handlers]
@@ -227,43 +217,37 @@ formatter=formatter
 args=(sys.stdout,)
 
 [formatter_formatter]
-format=%(levelname) -20s %(module)-20s %(process) -6d %(lineno)-5d %(asctime)-10s %(message)-100s
+format={levelname:<25s}{asctime:<10s} {process:<10d} {filename:>20s}:{lineno:<10d} {message:>}
 datefmt=%H:%M:%S
 class=PROJECT_NAME.ColoredFormatter
-			"""
+style={
+			""",
     },
-    {"type": "conditional",
-     "condition": "venv",
-     "true": {
-         "type": "case",
-         "condition": "manager",
-         "pipenv": {
-             "type": "normal",
-             "name": "Pipfile",
-             "location": ".",
-                         "content":
-                         """[packages]
+    {
+        "type": "conditional",
+        "condition": "venv",
+        "true": {
+            "type": "case",
+            "condition": "manager",
+            "pipenv": {
+                "type": "normal",
+                "name": "Pipfile",
+                "location": ".",
+                "content": """[packages]
 pre-commit = "*"
 isort = "*"
-"""
-         },
-         "pip": {
-             "type": "normal",
-             "name": "requirements.txt",
-             "location": ".",
-                         "content":
-                         """"""
-         },
-         "pyenv": {
-             "type": "normal",
-             "name": "requirements.txt",
-             "location": ".",
-                         "content":
-                         """"""
-         }
-     },
-     "false": None,
-     },
+""",
+            },
+            "pip": {
+                "type": "normal",
+                "name": "requirements.txt",
+                "location": ".",
+                "content": """""",
+            },
+            "pyenv": None,
+        },
+        "false": None,
+    },
     {
         "type": "case",
         "condition": "license",
@@ -271,8 +255,7 @@ isort = "*"
             "type": "normal",
             "name": "LICENSE",
             "location": ".",
-            "content":
-            f"""MIT License
+            "content": f"""MIT License
 
 Copyright (c) {datetime.datetime.now().year} AUTHOR
 
@@ -293,14 +276,13 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-				"""
+				""",
         },
         "unlicense": {
             "type": "normal",
             "name": "LICENSE",
             "location": ".",
-            "content":
-            f"""This is free and unencumbered software released into the public domain.
+            "content": f"""This is free and unencumbered software released into the public domain.
 
 Anyone is free to copy, modify, publish, use, compile, sell, or
 distribute this software, either in source code form or as a compiled
@@ -324,14 +306,13 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <https://unlicense.org>
-					"""
+					""",
         },
         "boost": {
             "type": "normal",
             "name": "LICENSE",
             "location": ".",
-            "content":
-            f"""Boost Software License - Version 1.0 - August 17th, 2003
+            "content": f"""Boost Software License - Version 1.0 - August 17th, 2003
 
 Permission is hereby granted, free of charge, to any person or organization
 obtaining a copy of the software and accompanying documentation covered by
@@ -354,7 +335,7 @@ SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
 FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
-					"""
+					""",
         },
     },
     {
@@ -369,20 +350,18 @@ build-backend = "setuptools.build_meta"
 profile = "google"
 src_paths = ["PROJECT_NAME"]
 skip = ["__init__.py"]
-"""
+
+[tool.mypy]
+strict = true
+allow_redefinition = true
+""",
     },
-    {
-        "type": "normal",
-        "name": "README.md",
-        "location": ".",
-        "content": """"""
-    },
+    {"type": "normal", "name": "README.md", "location": ".", "content": """"""},
     {
         "type": "normal",
         "name": "setup.cfg",
         "location": ".",
-        "content":
-        """# This file is used to configure your project.
+        "content": """# This file is used to configure your project.
 # Read more about the various options under:
 # http://setuptools.readthedocs.io/en/latest/setuptools.html#configuring-setup-using-setup-cfg-files
 
@@ -399,41 +378,20 @@ packages = find:
 
 # Add here dependencies of your project (semicolon/line-separated), e.g.
 install_requires =
-    humanfriendly==9.2
 
 # Require a specific Python version, e.g. Python 2.7 or >= 3.4
-python_requires = >=3.6
+python_requires = >=3.12
 
 [options.extras_require]
 # Add here additional requirements for extra features, to install with:
-# `pip install PROJECT_NAME[test]` like:
+# `pip install PROJECT_NAME[dev]` like:
 # PDF = ReportLab; RXP
 # Add here test requirements (semicolon/line-separated)
-test =
+dev =
     pytest
     pytest-xdist
-
-[flake8]
-max-line-length = 240
-ignore = E111,E114
-extend-ignore =
-    # Ignore indentation of four errors
-    E111
-
-exclude =
-    # No need to traverse our git directory
-    .git,
-    # There's no value in checking cache directories
-    __pycache__,
-    # The conf file is mostly autogenerated, ignore it
-    docs/conf.py,
-    # The old directory contains Flake8 2.0
-    old,
-    # This contains our built documentation
-    build,
-    # This contains builds of flake8 that we don't want to check
-    dist,
-    .pytype"""
+    pre-commit==3.7.1
+""",
     },
     {
         "type": "normal",
@@ -443,7 +401,7 @@ exclude =
 
 if __name__ == "__main__":
   setuptools.setup()
-"""
+""",
     },
     {
         "type": "normal",
@@ -458,41 +416,65 @@ from PROJECT_NAME.loggers import ColoredFormatter
 
 logging.config.fileConfig(str(pathlib.Path(__file__).parent.resolve()) + "/logging_config.ini")
 logger = logging.getLogger()
-"""
+""",
     },
     {
         "type": "normal",
         "name": "__init__.py",
         "location": "./PROJECT_NAME/loggers/",
-        "content": """from PROJECT_NAME.loggers.colored_formatter import ColoredFormatter"""
+        "content": """from PROJECT_NAME.loggers.colored_formatter import ColoredFormatter
+__all__ = ["ColoredFormatter", "get_logger"]
+        """,
     },
     {
         "type": "normal",
         "name": "colored_formatter.py",
         "location": "./PROJECT_NAME/loggers",
-        "content": """import logging
+        "content": """from enum import Enum
+import logging
+from typing import Any
 
-from humanfriendly.terminal import ansi_wrap
+
+class TerminalColor(Enum):
+    ENDC = "\033[0m"
+    BOLD = "\033[1m"
+    UNDERLINE = "\033[4m"
+    GREEN = "\033[32m"
+    BLUE = "\033[94m"
+    MAGENTA = "\033[95m"
+    CYAN = "\033[96m"
+    YELLOW = "\033[93m"
+    RED = "\033[31m"
+    BRIGHTRED = "\033[91m"
+    BRIGHTWHITE = "\033[97m"
+
+    def __str__(self) -> str:
+        return self.value
 
 
 class ColoredFormatter(logging.Formatter):
-	FORMATS = {
-		logging.DEBUG: {"color": "green", "bold": True},
-		logging.ERROR: {"color": "red", "bold": True},
-		logging.WARNING: {"color": "yellow", "bold": True},
-		logging.CRITICAL: {"color": "magenta", "bright": True, "bold": True},
-		logging.INFO: {"color": "white", "bold": True}
-	}
-
-	def __init__(self, fmt, datefmt, *args, **kwargs):
-		super().__init__(fmt, datefmt, *args, **kwargs)
-		self.fmt = fmt
-
-	def format(self, record):
-		record.levelname = ansi_wrap(record.levelname, **self.FORMATS[record.levelno])
-		record.msg = ansi_wrap(str(record.msg), **self.FORMATS[record.levelno])
-		return super().format(record)
-"""
+    FORMATS = {
+        logging.DEBUG: f"{TerminalColor.BOLD}{TerminalColor.GREEN}",
+        logging.ERROR: f"{TerminalColor.BOLD}{TerminalColor.RED}",
+        logging.WARNING: f"{TerminalColor.BOLD}{TerminalColor.MAGENTA}",
+        logging.CRITICAL: f"{TerminalColor.BOLD}{TerminalColor.BRIGHTRED}",
+        logging.INFO: f"{TerminalColor.BOLD}{TerminalColor.BRIGHTWHITE}",
     }
 
+    def __init__(
+        self, fmt: str | None, datefmt: str | None, *args: Any, **kwargs: Any
+    ) -> None:
+        super().__init__(fmt, datefmt, *args, **kwargs)
+        self.fmt = fmt
+
+    def format(self, record: logging.LogRecord) -> str:
+        record.levelname = (
+            f"{self.FORMATS[record.levelno]}{record.levelname}{TerminalColor.ENDC}"
+        )
+        record.msg = f"{self.FORMATS[record.levelno]}{record.msg}{TerminalColor.ENDC}"
+
+        return super().format(record)
+
+""",
+    },
 ]
