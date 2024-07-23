@@ -37,7 +37,7 @@ class Storage:
     @classmethod
     def from_json(
         cls,
-        file_name: str,
+        file_name: Path,
         default: dict[str, str | None] = {
             "author": None,
             "manager": None,

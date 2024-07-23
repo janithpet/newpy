@@ -1,4 +1,9 @@
-def retrieve(arguments, storage, arg, tmp=False):
+from typing import Any
+
+from newpy.storage.storage import Storage
+
+
+def retrieve(arguments: Any, storage: Storage, arg: str, tmp: bool = False) -> Any:
     _arg = getattr(arguments, arg)
     if _arg is not None:
         if tmp:

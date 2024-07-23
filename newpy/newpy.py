@@ -109,7 +109,7 @@ retrieve_license = partial(retrieve, arg="license", tmp=True)
 
 
 def handle_subprocess_result(
-    result: subprocess.CompletedProcess | None,
+    result: subprocess.CompletedProcess[str] | None,
     process_description: str,
     log_if_successful: bool = False,
 ) -> None:
@@ -192,7 +192,7 @@ def operate_on_file(
 
 def main() -> None:
     storage: Storage = Storage.from_json(
-        str(pathlib.Path(__file__).parent.resolve()) + "/storage/storage.json"
+        pathlib.Path(__file__).parent.resolve() / "storage/storage.json"
     )
     author = retrieve_author(arguments, storage)
     logger.info(f"Author is set to {author}")
