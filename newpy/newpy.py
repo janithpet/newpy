@@ -121,8 +121,8 @@ def handle_subprocess_result(
             logger.error(f"Could not {process_description}")
             logger.error(f"{result.stderr.strip()}")
         else:
-            logger.warning(f"Could not {process_description}")
-            logger.warning(f"{result.stderr.strip()}")
+            logger.warning(f"{process_description} exited fine, but had the following stderr")
+            logger.warning(f"{result.stderr.strip().replace("\n", " ").replace("\r", " ")}")
     if result.stdout != "" and log_if_successful and result.returncode == 0:
         logger.info(result.stdout.strip())
 
@@ -212,7 +212,8 @@ def main() -> None:
         logger.error("Please enter a project_name")
         exit()
 
-    project_path = f"{os.getcwd()}/{arguments.project_name}"
+    _raw_project_name = str(arguments.project_name).replace("-", "_")
+    project_path = f"{os.getcwd()}/{_raw_project_name}"
     project_name = os.path.basename(project_path)
 
     assert project_name != "", "Please remove any trailing '/'."
